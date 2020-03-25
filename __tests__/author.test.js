@@ -24,12 +24,47 @@ describe('author routes', () => {
     return request(app)
       .get(`/api/v1/authors/${author._id}`)
       .then(res => {
-        console.log(res.body);
         expect(res.body).toEqual({
           ...author
         });
       });
   });
 
+  it('gets all authors', async() => {
+    const authors = await getAuthors();
+
+    return request(app)
+      .get('/api/v1/authors/')
+      .then(res => {
+        expect(res.body).toEqual(authors);
+      });
+  });
+
+  it('updates an author by id', async() => {
+    const author = await getAuthor();
+
+    return request(app)
+      .patch(`/api/v1/authors/${author._id}`)
+      .send({ name: 'Billy Bobbins' })
+      .then(res => {
+        expect(res.body).toEqual({
+          ...author,
+          name: 'Billy Bobbins'
+        });
+      });
+  });
+
+  it('deletes an author by id', async() => {
+    const author = await getAuthor();
+
+    return request(app)
+      .delete(`/api/v1/authors/${author._id}`)
+      .send({ name: 'Billy Bobbins' })
+      .then(res => {
+        expect(res.body).toEqual({
+          ...author
+        });
+      });
+  });
 
 });
