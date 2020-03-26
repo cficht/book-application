@@ -18,6 +18,22 @@ describe('author routes', () => {
       });
   });
 
+  it('gets the top 3 authors with the most books which will have a length of 3', async() => {
+    return request(app)
+      .get('/api/v1/authors/topBooks')
+      .then(res => {
+        expect(res.body).toHaveLength(3);
+      });
+  });
+
+  it('gets the top 3 authors with the most written pages which will have a length of 3', async() => {
+    return request(app)
+      .get('/api/v1/authors/topPages')
+      .then(res => {
+        expect(res.body).toHaveLength(3);
+      });
+  });
+
   it('gets an author by id', async() => {
     const author = await getAuthor();
 
